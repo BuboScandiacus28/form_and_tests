@@ -1,5 +1,5 @@
 import setPrice from './setPrice/setPrice';
-import setDeadline from './setDeadline/setDeadline'
+import {deadlineToHour, deadlineToStr} from './setDeadline/setDeadline'
 
 //Получение активных эл-ов формы
 let deadline = document.getElementsByClassName('deadline')[0];
@@ -25,13 +25,14 @@ let outputOnDisplay = (symbols, language) => {
         return false;
     }
 
-    let str;
-
     //Занисение данных о цене услуги в соответствующий элемент на странице
     price.textContent = setPrice(symbols, language);
 
-     
-    str = setDeadline(symbols, language);
+    let time, str;
+
+    time = deadlineToHour (symbols, language);
+
+    str = deadlineToStr(time);
    
     if (str) {
         //Занисение данных о дате окончания работ в соответствующий элемент на странице
@@ -71,6 +72,6 @@ languages.addEventListener('change', changeLanguage);
 //она не отображается в таком случае
 if (!deadline.textContent) deadline.classList.add('empty');
 
-export {setPrice, setDeadline}
+export {setPrice, deadlineToStr}
 //module.exports.outputOnDisplay = outputOnDisplay;
 

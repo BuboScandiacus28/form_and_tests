@@ -21,36 +21,10 @@ let setEndWorkDay = (year, month, day) => {
     }
 }
 
-//---------------------------------------------
-//Функция формирования даты окончания работ в виде строки
-//---------------------------------------------
-let setDeadline = (symbols, language, date = new Date()) => {
-
-    //Начальное объявление переменных
-    //hours - количество часов затраченых на работу
-    //P.S. переменная не может хранить более 9 часов, т.к. это полный рабочий день.
-    //переменная обнулится, а к количеству дней прибавится один
-    //workDay - количество рабочих дней затраченых на работу
-    //minutes - количество минут затраченых на работу
-    //P.S. переменная не может хранить более 60 минут, т.к. это полный рабочий час.
-    //переменная обнулится, а к количеству часов прибавится один
+let deadlineToHour = (symbols, language) => {
     let hours = 0;
-    let workDay = 0;
     let minutes = 0;
-
-    if (!localStorage.getItem('hours')) localStorage.setItem('hours', 0);
-    if (!localStorage.getItem('workDay')) localStorage.setItem('workDay', 0)
-
-    //objData - объект хранящий деструктуризированную дату
-    let objData = {
-        year: date.getFullYear(),
-        month: date.getMonth(),
-        day: date.getDate(),
-        dayOfWeek: date.getDay(),
-        hours: date.getHours(),
-        minutes: date.getMinutes()
-    }
-
+    
     //Формирование количества затраченного времени в часах
     //исходя из количества символов и коэффициента языка 
     // + дополнительные 30 минут
@@ -62,8 +36,15 @@ let setDeadline = (symbols, language, date = new Date()) => {
     //если на работу уходит меньше часа
     if (hours < 1) {
 
-        hours = 1;
-        minutes = 0;
+        minutes += Math.trunc((hours - Math.trunc(hours)) * 60);
+
+        if (minutes >= 60) {
+            hours = 1;
+            minutes -= 60;
+        } else {
+            hours = 1;
+            minutes = 0;
+        }
 
         //Проверка на целочисленность переменной hours.
     } else if (hours > Math.trunc(hours)) {
@@ -79,6 +60,39 @@ let setDeadline = (symbols, language, date = new Date()) => {
             minutes -= 60;
         }
 
+    }
+
+    return {
+        hours,
+        minutes
+    }
+}
+
+//---------------------------------------------
+//Функция формирования даты окончания работ в виде строки
+//---------------------------------------------
+let deadlineToStr = (time, date = new Date()) => {
+
+    //Начальное объявление переменных
+    //hours - количество часов затраченых на работу
+    //P.S. переменная не может хранить более 9 часов, т.к. это полный рабочий день.
+    //переменная обнулится, а к количеству дней прибавится один
+    //workDay - количество рабочих дней затраченых на работу
+    //minutes - количество минут затраченых на работу
+    //P.S. переменная не может хранить более 60 минут, т.к. это полный рабочий час.
+    //переменная обнулится, а к количеству часов прибавится один
+    let hours = time.hours,
+        workDay = 0,
+        minutes = time.minutes;
+
+    //objData - объект хранящий деструктуризированную дату
+    let objData = {
+        year: date.getFullYear(),
+        month: date.getMonth(),
+        day: date.getDate(),
+        dayOfWeek: date.getDay(),
+        hours: date.getHours(),
+        minutes: date.getMinutes()
     }
 
     //Проверка на то, что день начала работ не является выходным,
@@ -115,34 +129,10 @@ let setDeadline = (symbols, language, date = new Date()) => {
         objData.minutes = 0;
     }
 
-    //Округление, чтобы избавится от проблем js с значениями типа: .000000000000001
-    hours = Math.round(hours);
+    
     //Приведение часов к рабочим дням с откидыванием дробной части
     workDay = hours / 9;
     workDay = Math.trunc(workDay);
-
-    //Проверка на необходимости перересовки
-    if (localStorage.getItem('hours') === hours && localStorage.getItem('workDay') === workDay) {
-        return false;
-    }
-
-    if (!localStorage.getItem('hours')) localStorage.setItem('hours', 0);
-
-    //Изменение при стирании текста и соответственно уменьшении часов затраченых на работу
-    if (localStorage.getItem('hours') > hours) {
-        hours = +localStorage.getItem('hours') + (hours - +localStorage.getItem('hours'));
-        localStorage.setItem('hours', hours);
-    } else {
-        localStorage.setItem('hours', hours);
-    }
-
-    //Изменение при стирании текста и соответственно уменьшении дней затраченых на работу
-    if (localStorage.getItem('workDay') > workDay) {
-        workDay = +localStorage.getItem('workDay') + (workDay - +localStorage.getItem('workDay'));
-        localStorage.setItem('workDay', workDay);
-    } else {
-        localStorage.setItem('workDay', workDay);
-    }
 
     //Отнимаем у переменной hours количество часов, которые приведены к рабочим дням
     if (workDay >= 1) hours -= workDay * 9;
@@ -197,4 +187,4 @@ let setDeadline = (symbols, language, date = new Date()) => {
     return `Термин исполнения: ${objData.day}.${objData.month}.${objData.year} в ${objData.hours}:${objData.minutes}`;
 }
 
-export default setDeadline
+export {deadlineToStr, deadlineToHour}
