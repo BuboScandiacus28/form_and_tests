@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./main.css">
+</head>
+<body>
+
+    <form>
+        <input type="email" class="email" name="email" placeholder="Ваша эл. почта">    
+        <input type="text" class="userName" placeholder="Ваше имя" name="userName">
+        <textarea name="text" class="text" placeholder="Введите текст"></textarea>
+        <p class="characters">0</p>
+
+        <div class="language_wrapper">
+
+          <div>
+            <input type="radio" class="language" value="ru" name="language">
+            <span>Русский</span>
+          </div>
+
+          <div>
+            <input type="radio" class="language" value="ua" name="language">
+            <span>Украинский</span>
+          </div>
+
+          <div>
+            <input type="radio" class="language" value="en" name="language">
+            <span>Английский</span>
+          </div>
+
+        </div>
+
+        <p class="price">0,00 грн.</p>
+        <p class="deadline"></p>
+        <input type="submit" class="submit" value="Заказать" name="submit">
+    </form>
+
+    <script src="./dist/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+{
+  "name": "form_with_jest",
+  "version": "1.0.0",
+  "description": "-",
+  "main": "index.html",
+  "scripts": {
+    "test": "jest",
+    "dev": "webpack-dev-server --open --mode development",
+    "build": "webpack --mode production"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-jest": "^26.3.0",
+    "jest": "^26.4.2"
+  },
+  "dependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "babel-loader": "^8.1.0",
+    "path": "^0.12.7",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "jest": {
+    "modulePaths": [
+      "/src/test"
+    ],
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ]
+  }
+}

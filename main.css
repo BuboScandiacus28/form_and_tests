@@ -1,0 +1,39 @@
+form {
+    width: 80%;
+
+    margin: auto;
+
+    display: flex;
+    flex-direction: column;
+}
+
+form>* {
+    margin-top: 12px;
+}
+
+form>input:not([type="radio"]),
+form>textarea {
+    border: 2px solid gray;
+    border-radius: 10px;
+
+    padding: 7px 10px;
+}
+
+textarea {
+    min-height: 200px;
+
+    resize: none;
+}
+
+.empty {
+    display: none;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+p:not([class="characters"]) {
+    text-align: center;
+}
