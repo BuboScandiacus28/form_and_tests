@@ -71,7 +71,7 @@ let deadlineToHour = (symbols, language) => {
 //---------------------------------------------
 //Функция формирования даты окончания работ в виде строки
 //---------------------------------------------
-let deadlineToStr = (time, date = new Date()) => {
+let deadlineToStr = (argHours, argMinutes, date = new Date()) => {
 
     //Начальное объявление переменных
     //hours - количество часов затраченых на работу
@@ -81,9 +81,9 @@ let deadlineToStr = (time, date = new Date()) => {
     //minutes - количество минут затраченых на работу
     //P.S. переменная не может хранить более 60 минут, т.к. это полный рабочий час.
     //переменная обнулится, а к количеству часов прибавится один
-    let hours = time.hours,
+    let hours = argHours,
         workDay = 0,
-        minutes = time.minutes;
+        minutes = argMinutes;
 
     //objData - объект хранящий деструктуризированную дату
     let objData = {

@@ -32,7 +32,7 @@ let outputOnDisplay = (symbols, language) => {
 
     time = deadlineToHour (symbols, language);
 
-    str = deadlineToStr(time);
+    str = deadlineToStr(time.hours, time.minutes);
    
     if (str) {
         //Занисение данных о дате окончания работ в соответствующий элемент на странице
